@@ -3,319 +3,422 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Empleo en Llanes · Asturias</title>
+  <title>EMPLEO · LLANES · SYS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --sea:   #0a3d62;
-      --foam:  #d6eff8;
-      --sand:  #f5efe6;
-      --gold:  #c9a84c;
-      --cliff: #2c4a3e;
-      --text:  #1a2530;
-      --muted: #6b7f8a;
-      --card:  #ffffff;
-      --radius: 12px;
+      --bg:    #020810;
+      --panel: #060e1e;
+      --bdr:   #0d2a4a;
+      --cyan:  #00e5ff;
+      --cyan2: #00b4cc;
+      --blue:  #0066ff;
+      --warn:  #ff6b00;
+      --warn2: #ffaa00;
+      --text:  #c8e8f0;
+      --muted: #3a6a7a;
+      --green: #00ff9d;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--sand);
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* --- HEADER --- */
+    /* SCANLINES */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* GRID */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,229,255,0.025) 1px,transparent 1px);
+      background-size: 44px 44px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ═══════════════════════════
+       CHROME BANNER
+    ═══════════════════════════ */
+    .chrome-banner {
+      position: relative; z-index: 100;
+      background: linear-gradient(90deg,#110400,#1e0800,#110400);
+      border-bottom: 2px solid var(--warn);
+      padding: 0.6rem 1rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .chrome-banner::before,
+    .chrome-banner::after {
+      content: '';
+      position: absolute; top:0; bottom:0;
+      width: 80px;
+    }
+    .chrome-banner::before { left:0; background:linear-gradient(90deg,rgba(255,107,0,.2),transparent); }
+    .chrome-banner::after  { right:0; background:linear-gradient(-90deg,rgba(255,107,0,.2),transparent); }
+
+    .chrome-text {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(0.58rem, 2vw, 0.8rem);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--warn2);
+      text-shadow: 0 0 10px rgba(255,150,0,.8), 0 0 22px rgba(255,107,0,.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .blink { animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ═══════════════════════════
+       HEADER
+    ═══════════════════════════ */
     header {
-      background: var(--sea);
-      color: white;
-      padding: 2.5rem 2rem 3rem;
-      position: relative;
+      position: relative; z-index: 10;
+      padding: 2.2rem 1.5rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--bdr);
+      background: linear-gradient(180deg,rgba(0,102,255,.07) 0%,transparent 100%);
       overflow: hidden;
     }
 
-    header::before {
-      content: '';
+    .hcorner {
       position: absolute;
-      bottom: -2px; left: 0; right: 0;
-      height: 60px;
-      background: var(--sand);
-      clip-path: ellipse(55% 100% at 50% 100%);
+      width: 70px; height: 70px;
+      border-color: var(--cyan);
+      border-style: solid;
+      opacity: 0.25;
     }
+    .hcorner.tl { top:14px; left:14px; border-width:2px 0 0 2px; }
+    .hcorner.tr { top:14px; right:14px; border-width:2px 2px 0 0; }
+    .hcorner.bl { bottom:14px; left:14px; border-width:0 0 2px 2px; }
+    .hcorner.br { bottom:14px; right:14px; border-width:0 2px 2px 0; }
 
-    header::after {
-      content: '';
-      position: absolute;
-      top: -60px; right: -60px;
-      width: 280px; height: 280px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.04);
-      pointer-events: none;
-    }
-
-    .header-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    .eyebrow {
-      font-size: 0.72rem;
+    .sys-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
       letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.6rem;
-      font-weight: 500;
+      color: var(--cyan2);
+      opacity: 0.6;
+      margin-bottom: 0.9rem;
     }
 
     h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 5vw, 3rem);
-      line-height: 1.15;
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.7rem, 5vw, 3rem);
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      color: #fff;
+      text-shadow: 0 0 20px var(--cyan), 0 0 50px rgba(0,229,255,.25);
       margin-bottom: 0.5rem;
     }
-
-    h1 em {
-      font-style: italic;
-      color: var(--foam);
-    }
+    h1 span { color: var(--cyan); }
 
     .subtitle {
-      font-size: 0.95rem;
-      color: rgba(255,255,255,0.65);
-      font-weight: 300;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.88rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-weight: 400;
     }
 
-    /* --- STATUS BAR --- */
+    /* SCAN LINE */
+    .scan-line {
+      height: 2px;
+      background: linear-gradient(90deg,transparent,var(--cyan),transparent);
+      animation: scanPulse 3s ease-in-out infinite;
+    }
+    @keyframes scanPulse { 0%,100%{opacity:.15} 50%{opacity:.7} }
+
+    /* ═══════════════════════════
+       STATUS BAR
+    ═══════════════════════════ */
+    .status-wrap {
+      position: relative; z-index: 10;
+      max-width: 880px; margin: 1.4rem auto 0; padding: 0 1rem;
+    }
+
     .status-bar {
-      max-width: 860px;
-      margin: 2rem auto 1.2rem;
-      padding: 0 1rem;
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.6rem;
+      flex-wrap: wrap; gap: 0.5rem;
+      background: var(--panel);
+      border: 1px solid var(--bdr);
+      border-radius: 3px;
+      padding: 0.75rem 1.2rem;
+      position: relative;
+    }
+    .status-bar::before {
+      content: '[ SYS:LIVE ]';
+      position: absolute; top:-0.5rem; left:1rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem; letter-spacing:.15em;
+      color: var(--cyan); background: var(--bg); padding: 0 .4rem;
     }
 
     .status-info {
-      font-size: 0.82rem;
-      color: var(--muted);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem; color: var(--green); letter-spacing:.05em;
     }
 
     .countdown {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.82rem;
-      color: var(--cliff);
-      font-weight: 500;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem; color: var(--cyan);
+      display: flex; align-items: center; gap: .5rem;
     }
 
     .dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: #4caf87;
-      animation: pulse 2s infinite;
+      width:7px; height:7px; border-radius:50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: dotPulse 1.5s infinite;
+    }
+    @keyframes dotPulse { 50%{opacity:.3; box-shadow:0 0 2px var(--green);} }
+
+    /* PROGRESS */
+    .progress-wrap {
+      height: 2px; margin-top: 0.6rem;
+      background: rgba(0,229,255,.06);
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg,var(--blue),var(--cyan));
+      box-shadow: 0 0 8px var(--cyan);
+      transition: width 1s linear;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
-
-    /* --- CARDS --- */
-    .cards-wrap {
-      max-width: 860px;
-      margin: 0 auto 3rem;
+    /* ═══════════════════════════
+       SECTION LABEL
+    ═══════════════════════════ */
+    .section-label {
+      position: relative; z-index: 10;
+      max-width: 880px; margin: 1.4rem auto .4rem;
       padding: 0 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem; letter-spacing:.2em; color: var(--muted);
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .section-label::after { content:''; flex:1; height:1px; background:var(--bdr); }
+
+    /* ═══════════════════════════
+       CARDS
+    ═══════════════════════════ */
+    .cards-wrap {
+      position: relative; z-index: 10;
+      max-width: 880px; margin: 0 auto 2rem;
+      padding: 0 1rem;
+      display: flex; flex-direction: column; gap: .65rem;
     }
 
     .card {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 1.4rem 1.6rem;
+      background: var(--panel);
+      border: 1px solid var(--bdr);
+      border-left: 3px solid var(--cyan);
+      border-radius: 2px;
+      padding: 1rem 1.3rem;
       display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 0 1.2rem;
-      align-items: start;
-      box-shadow: 0 2px 12px rgba(10,61,98,0.07);
-      border: 1px solid rgba(10,61,98,0.06);
+      grid-template-columns: 3rem 1fr auto;
+      gap: 0 1rem;
+      align-items: center;
       text-decoration: none;
       color: inherit;
-      transition: transform 0.2s, box-shadow 0.2s;
-      animation: slideIn 0.4s ease both;
+      position: relative; overflow: hidden;
+      transition: background .2s, border-color .2s;
+      animation: slideIn .4s ease both;
     }
 
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 28px rgba(10,61,98,0.13);
+    .card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg,rgba(0,229,255,.06),transparent 55%);
+      opacity: 0; transition: opacity .2s;
     }
+
+    .card:hover { background: rgba(0,229,255,.03); }
+    .card:hover::before { opacity: 1; }
 
     @keyframes slideIn {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from { opacity:0; transform:translateX(-10px); }
+      to   { opacity:1; transform:translateX(0); }
     }
 
     .card-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      color: var(--foam);
-      line-height: 1;
-      min-width: 2rem;
-      text-align: right;
-      padding-top: 0.1rem;
+      font-family: 'Orbitron', monospace;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--cyan);
+      text-shadow: 0 0 10px var(--cyan);
+      text-align: center; opacity: .65;
     }
 
     .card-body { min-width: 0; }
 
     .card-title {
-      font-weight: 500;
-      font-size: 1rem;
-      line-height: 1.35;
-      margin-bottom: 0.35rem;
-      color: var(--sea);
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600; font-size: .98rem;
+      line-height: 1.3; color: #ddf0f8;
+      margin-bottom: .28rem; letter-spacing:.03em;
     }
 
     .card-meta {
-      font-size: 0.8rem;
-      color: var(--muted);
-      display: flex;
-      gap: 0.8rem;
-      flex-wrap: wrap;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .65rem; color: var(--muted);
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      letter-spacing:.05em;
     }
-
-    .card-meta span { display: flex; align-items: center; gap: 0.25rem; }
 
     .card-arrow {
-      color: var(--gold);
-      font-size: 1.1rem;
-      padding-top: 0.2rem;
-      transition: transform 0.2s;
+      font-size: .85rem; color: var(--cyan); opacity: .4;
+      transition: opacity .2s, transform .2s;
     }
+    .card:hover .card-arrow { opacity: 1; transform: translateX(4px); }
 
-    .card:hover .card-arrow { transform: translateX(4px); }
-
-    /* --- STATES --- */
+    /* ═══════════════════════════
+       STATES
+    ═══════════════════════════ */
     .state-box {
-      max-width: 860px;
-      margin: 2rem auto;
-      padding: 2.5rem 1rem;
-      text-align: center;
-      color: var(--muted);
+      text-align: center; padding: 3rem 1rem; color: var(--muted);
     }
-
-    .state-box .icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
-    .state-box p { font-size: 0.95rem; line-height: 1.6; }
+    .state-box p {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .88rem; line-height: 1.8; letter-spacing:.05em;
+    }
 
     .spinner {
-      width: 40px; height: 40px;
-      border: 3px solid var(--foam);
-      border-top-color: var(--sea);
+      width: 44px; height: 44px;
+      border: 2px solid rgba(0,229,255,.1);
+      border-top-color: var(--cyan); border-right-color: var(--cyan);
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 1rem;
+      animation: spin .7s linear infinite;
+      margin: 0 auto 1.2rem;
+      box-shadow: 0 0 14px rgba(0,229,255,.25);
     }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes spin { to { transform:rotate(360deg); } }
 
     .btn-retry {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.6rem 1.4rem;
-      background: var(--sea);
-      color: white;
-      border: none;
-      border-radius: 40px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.88rem;
-      cursor: pointer;
-      transition: background 0.2s;
+      display: inline-block; margin-top: 1.2rem;
+      padding: .6rem 1.8rem;
+      background: transparent; color: var(--cyan);
+      border: 1px solid var(--cyan); border-radius: 2px;
+      font-family: 'Orbitron', monospace;
+      font-size: .7rem; letter-spacing:.14em;
+      cursor: pointer; transition: background .2s, box-shadow .2s;
+    }
+    .btn-retry:hover {
+      background: rgba(0,229,255,.1);
+      box-shadow: 0 0 16px rgba(0,229,255,.3);
     }
 
-    .btn-retry:hover { background: var(--cliff); }
-
-    /* --- FOOTER --- */
+    /* ═══════════════════════════
+       FOOTER
+    ═══════════════════════════ */
     footer {
+      position: relative; z-index: 10;
+      border-top: 1px solid var(--bdr);
+      padding: 1.5rem 1rem 2rem;
       text-align: center;
-      padding: 1.5rem;
-      font-size: 0.78rem;
-      color: var(--muted);
     }
 
-    footer a { color: var(--sea); }
+    .footer-source {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .64rem; color: var(--muted); letter-spacing:.08em;
+      margin-bottom: 0.9rem;
+    }
+    .footer-source a { color: var(--cyan2); text-decoration: none; }
 
-    /* --- PROGRESS BAR --- */
-    .progress-wrap {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 1rem;
-      height: 3px;
-      background: rgba(10,61,98,0.08);
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 1.5rem;
+    .footer-sig {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(.68rem, 1.8vw, .88rem);
+      font-weight: 700;
+      letter-spacing: .22em;
+      color: var(--cyan);
+      text-shadow: 0 0 12px rgba(0,229,255,.7), 0 0 28px rgba(0,229,255,.2);
     }
 
-    .progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, var(--sea), var(--gold));
-      border-radius: 10px;
-      transition: width 1s linear;
-    }
+    .deco { max-width:880px; margin:0 auto; height:1px; background:linear-gradient(90deg,transparent,var(--bdr),transparent); }
 
-    @media (max-width: 600px) {
-      .card { grid-template-columns: auto 1fr; }
-      .card-arrow { display: none; }
-      .card-num { font-size: 1.3rem; }
+    @media (max-width:580px) {
+      .card { grid-template-columns: 2.2rem 1fr; }
+      .card-arrow { display:none; }
+      .card-num { font-size:.9rem; }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="header-inner">
-    <p class="eyebrow">📍 Llanes · Asturias · SNE</p>
-    <h1>Empleo en <em>Llanes</em></h1>
-    <p class="subtitle">Últimas ofertas del Sistema Nacional de Empleo · Se actualiza cada 30 minutos</p>
-  </div>
-</header>
-
-<div class="status-bar">
-  <span class="status-info" id="lastUpdate">Cargando...</span>
-  <span class="countdown">
-    <span class="dot"></span>
-    <span id="nextUpdate">—</span>
+<!-- ═══ CHROME WARNING ═══ -->
+<div class="chrome-banner">
+  <span class="chrome-text">
+    <span class="blink">⚠</span>
+    IMPORTANTE: ABRIR SIEMPRE CON GOOGLE CHROME
+    <span class="blink">⚠</span>
   </span>
 </div>
 
-<div class="progress-wrap">
-  <div class="progress-bar" id="progressBar" style="width:100%"></div>
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="hcorner tl"></div>
+  <div class="hcorner tr"></div>
+  <div class="hcorner bl"></div>
+  <div class="hcorner br"></div>
+  <p class="sys-tag">// SYS:EMPLEO · COORD:43.42N,4.76W · PROVINCIA:ASTURIAS · STATUS:LIVE //</p>
+  <h1>EMPLEO <span>LLANES</span></h1>
+  <p class="subtitle">SISTEMA NACIONAL DE EMPLEO · ACTUALIZACIÓN AUTOMÁTICA CADA 30 MIN</p>
+</header>
+<div class="scan-line"></div>
+
+<!-- ═══ STATUS ═══ -->
+<div class="status-wrap">
+  <div class="status-bar">
+    <span class="status-info" id="lastUpdate">INICIALIZANDO SISTEMA...</span>
+    <span class="countdown">
+      <span class="dot"></span>
+      <span id="nextUpdate">—</span>
+    </span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar" style="width:100%"></div>
+  </div>
 </div>
+
+<!-- ═══ OFFERS ═══ -->
+<div class="section-label">REGISTROS ACTIVOS · LLANES · ASTURIAS</div>
 
 <div id="main" class="cards-wrap">
   <div class="state-box">
     <div class="spinner"></div>
-    <p>Buscando ofertas de empleo en Llanes…</p>
+    <p>// CONECTANDO CON SERVIDOR SNE...<br>// ESCANEANDO OFERTAS EN LLANES... //</p>
   </div>
 </div>
 
+<div class="deco"></div>
+
+<!-- ═══ FOOTER ═══ -->
 <footer>
-  Datos extraídos de <a href="https://www.sistemanacionalempleo.es/" target="_blank">sistemanacionalempleo.es</a>
+  <p class="footer-source">DATOS: <a href="https://www.sistemanacionalempleo.es/" target="_blank">SISTEMANACIONALEMPLEO.ES</a></p>
+  <p class="footer-sig">WEB CREADA POR JAVI._TJ</p>
 </footer>
 
 <script>
   const SOURCE_URL = 'https://www.sistemanacionalempleo.es/OfertaDifusionWEB/busquedaOfertas.do?modo=continuar&provincia=33&botonNavegacion=Enviar';
   const PROXY = 'https://api.allorigins.win/get?url=';
-  const INTERVAL = 30 * 60 * 1000; // 30 min
+  const INTERVAL = 30 * 60 * 1000;
   let nextRefreshAt = Date.now() + INTERVAL;
   let progressTimer;
 
@@ -328,20 +431,17 @@
     const doc = parser.parseFromString(html, 'text/html');
     const rows = doc.querySelectorAll('table tr');
     const results = [];
-
     for (const row of rows) {
       const cells = row.querySelectorAll('td');
       if (cells.length < 3) continue;
       const ubicacion = cells[2]?.textContent?.trim() || '';
       if (!ubicacion.toLowerCase().includes('llanes')) continue;
-
       const fecha = cells[0]?.textContent?.trim() || '';
       const linkEl = cells[1]?.querySelector('a');
       if (!linkEl) continue;
       const titulo = linkEl.textContent.trim();
       const href = linkEl.getAttribute('href') || '';
       const fullUrl = href.startsWith('http') ? href : 'https://www.sistemanacionalempleo.es' + href;
-
       results.push({ fecha, titulo, ubicacion, url: fullUrl });
       if (results.length >= 10) break;
     }
@@ -351,60 +451,48 @@
   function renderOffers(offers) {
     const main = document.getElementById('main');
     if (!offers.length) {
-      main.innerHTML = `
-        <div class="state-box">
-          <div class="icon">🔍</div>
-          <p>No se han encontrado ofertas activas en <strong>Llanes</strong> en este momento.<br>Se volverá a comprobar automáticamente en 30 minutos.</p>
-        </div>`;
+      main.innerHTML = `<div class="state-box"><p>// SIN RESULTADOS EN LLANES //<br>// PRÓXIMO ESCANEO EN 30 MIN //</p></div>`;
       return;
     }
-
     main.innerHTML = offers.map((o, i) => `
-      <a class="card" href="${o.url}" target="_blank" rel="noopener" style="animation-delay:${i * 0.06}s">
-        <span class="card-num">${String(i + 1).padStart(2, '0')}</span>
+      <a class="card" href="${o.url}" target="_blank" rel="noopener" style="animation-delay:${i*0.06}s">
+        <span class="card-num">${String(i+1).padStart(2,'0')}</span>
         <div class="card-body">
-          <div class="card-title">${o.titulo}</div>
+          <div class="card-title">${o.titulo.toUpperCase()}</div>
           <div class="card-meta">
-            <span>📅 ${o.fecha}</span>
-            <span>📍 ${capitalize(o.ubicacion.replace(/\(.*?\)/g, '').trim())}</span>
+            <span>DATE · ${o.fecha}</span>
+            <span>LOC · ${capitalize(o.ubicacion.replace(/\(.*?\)/g,'').trim()).toUpperCase()}</span>
           </div>
         </div>
-        <span class="card-arrow">→</span>
+        <span class="card-arrow">▶</span>
       </a>`
     ).join('');
   }
 
-  function renderError(msg) {
+  function renderError() {
     document.getElementById('main').innerHTML = `
       <div class="state-box">
-        <div class="icon">⚠️</div>
-        <p>${msg}</p>
-        <button class="btn-retry" onclick="loadOffers()">Reintentar ahora</button>
+        <p>// ERROR DE CONEXIÓN //<br>// COMPRUEBA TU RED E INTÉNTALO DE NUEVO //</p>
+        <button class="btn-retry" onclick="loadOffers()">REINTENTAR</button>
       </div>`;
   }
 
   async function loadOffers() {
-    document.getElementById('lastUpdate').textContent = 'Actualizando…';
-    document.getElementById('main').innerHTML = `
-      <div class="state-box">
-        <div class="spinner"></div>
-        <p>Buscando ofertas de empleo en Llanes…</p>
-      </div>`;
-
+    document.getElementById('lastUpdate').textContent = '// ACTUALIZANDO...';
+    document.getElementById('main').innerHTML = `<div class="state-box"><div class="spinner"></div><p>// CONECTANDO CON SERVIDOR SNE...<br>// ESCANEANDO OFERTAS EN LLANES... //</p></div>`;
     try {
       const res = await fetch(PROXY + encodeURIComponent(SOURCE_URL));
-      if (!res.ok) throw new Error('HTTP ' + res.status);
+      if (!res.ok) throw new Error();
       const json = await res.json();
-      const html = json.contents;
-      const offers = parseOffers(html);
+      const offers = parseOffers(json.contents);
       renderOffers(offers);
+      const t = new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
       document.getElementById('lastUpdate').textContent =
-        `Última actualización: ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })} · ${offers.length} oferta${offers.length !== 1 ? 's' : ''} en Llanes`;
-    } catch (e) {
-      renderError('No se pudo conectar con el servidor. Comprueba tu conexión e inténtalo de nuevo.');
-      document.getElementById('lastUpdate').textContent = 'Error al actualizar';
+        `SYNC: ${t} · ${offers.length} REGISTRO${offers.length!==1?'S':''}`;
+    } catch {
+      renderError();
+      document.getElementById('lastUpdate').textContent = '// ERROR DE CONEXIÓN //';
     }
-
     nextRefreshAt = Date.now() + INTERVAL;
     startCountdown();
   }
@@ -412,15 +500,14 @@
   function startCountdown() {
     clearInterval(progressTimer);
     progressTimer = setInterval(() => {
-      const remaining = Math.max(0, nextRefreshAt - Date.now());
-      const mins = Math.floor(remaining / 60000);
-      const secs = Math.floor((remaining % 60000) / 1000);
+      const rem = Math.max(0, nextRefreshAt - Date.now());
+      const m = Math.floor(rem/60000);
+      const s = Math.floor((rem%60000)/1000);
       document.getElementById('nextUpdate').textContent =
-        `Próxima actualización en ${mins}:${String(secs).padStart(2, '0')}`;
-      const pct = (remaining / INTERVAL) * 100;
-      document.getElementById('progressBar').style.width = pct + '%';
-      if (remaining === 0) loadOffers();
-    }, 1000);
+        `NEXT SCAN: ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      document.getElementById('progressBar').style.width = (rem/INTERVAL*100)+'%';
+      if (rem===0) loadOffers();
+    },1000);
   }
 
   loadOffers();
